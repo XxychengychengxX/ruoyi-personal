@@ -1,0 +1,61 @@
+package com.ruoyi.zhangyan.service;
+
+import com.ruoyi.zhangyan.domain.CompScore;
+
+import java.util.List;
+
+/**
+ * 成绩Service接口
+ *
+ * @author ruoyi
+ * @date 2025-04-01
+ */
+public interface ICompScoreService {
+    /**
+     * 查询成绩
+     *
+     * @param scoreId 成绩主键
+     * @return 成绩
+     */
+    public CompScore selectCompScoreByScoreId(Long scoreId);
+
+    /**
+     * 查询成绩列表
+     *
+     * @param compScore 成绩
+     * @return 成绩集合
+     */
+    public List<CompScore> selectCompScoreList(CompScore compScore);
+
+    /**
+     * 新增成绩
+     *
+     * @param compScore 成绩
+     * @return 结果
+     */
+    public int insertCompScore(CompScore compScore);
+
+    /**
+     * 修改成绩
+     *
+     * @param compScore 成绩
+     * @return 结果
+     */
+    public int updateCompScore(CompScore compScore);
+
+    /**
+     * 批量删除成绩
+     *
+     * @param scoreIds 需要删除的成绩主键集合
+     * @return 结果
+     */
+    public int deleteCompScoreByScoreIds(String scoreIds);
+
+    /**
+     * 删除成绩信息
+     *
+     * @param scoreId 成绩主键
+     * @return 结果
+     */
+    public int deleteCompScoreByScoreId(Long scoreId);
+}
