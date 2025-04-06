@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.zhangyan.mapper.CompCompetitionMapper">
+    
+    <resultMap type="CompCompetition" id="CompCompetitionResult">
+        <result property="competitionId"    column="competition_id"    />
+        <result property="activityId"    column="activity_id"    />
+        <result property="competitionName"    column="competition_name"    />
+        <result property="type"    column="type"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="groupType"    column="group_type"    />
+        <result property="maxTeamMembers"    column="max_team_members"    />
+    </resultMap>
+
+    <sql id="selectCompCompetitionVo">
+        select competition_id, activity_id, competition_name, type, start_time, end_time, group_type, max_team_members from comp_competition
+    </sql>
+
+    <select id="selectCompCompetitionList" parameterType="CompCompetition" resultMap="CompCompetitionResult">
+        <include refid="selectCompCompetitionVo"/>
+        <where>  
+            <if test="competitionName != null  and competitionName != ''"> and competition_name like concat('%', #{competitionName}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectCompCompetitionByCompetitionId" parameterType="Long" resultMap="CompCompetitionResult">
+        <include refid="selectCompCompetitionVo"/>
+        where competition_id = #{competitionId}
+    </select>
+
+    <insert id="insertCompCompetition" parameterType="CompCompetition" useGeneratedKeys="true" keyProperty="competitionId">
+        insert into comp_competition
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="competitionName != null and competitionName != ''">competition_name,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="groupType != null">group_type,</if>
+            <if test="maxTeamMembers != null">max_team_members,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="competitionName != null and competitionName != ''">#{competitionName},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="groupType != null">#{groupType},</if>
+            <if test="maxTeamMembers != null">#{maxTeamMembers},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCompCompetition" parameterType="CompCompetition">
+        update comp_competition
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityId != null">activity_id = #{activityId},</if>
+            <if test="competitionName != null and competitionName != ''">competition_name = #{competitionName},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="groupType != null">group_type = #{groupType},</if>
+            <if test="maxTeamMembers != null">max_team_members = #{maxTeamMembers},</if>
+        </trim>
+        where competition_id = #{competitionId}
+    </update>
+
+    <delete id="deleteCompCompetitionByCompetitionId" parameterType="Long">
+        delete from comp_competition where competition_id = #{competitionId}
+    </delete>
+
+    <delete id="deleteCompCompetitionByCompetitionIds" parameterType="String">
+        delete from comp_competition where competition_id in 
+        <foreach item="competitionId" collection="array" open="(" separator="," close=")">
+            #{competitionId}
+        </foreach>
+    </delete>
+
+</mapper>

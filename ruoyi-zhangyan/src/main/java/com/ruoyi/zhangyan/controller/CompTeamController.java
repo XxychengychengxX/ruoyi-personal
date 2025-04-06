@@ -23,14 +23,14 @@ import java.util.List;
  * @date 2025-04-01
  */
 @Controller
-@RequestMapping("/system/team")
+@RequestMapping("/zhangyan/team")
 public class CompTeamController extends BaseController {
-    private String prefix = "system/team";
+    private String prefix = "zhangyan/team";
 
     @Autowired
     private ICompTeamService compTeamService;
 
-    @RequiresPermissions("system:team:view")
+    @RequiresPermissions("zhangyan:team:view")
     @GetMapping()
     public String team() {
         return prefix + "/team";
@@ -39,7 +39,7 @@ public class CompTeamController extends BaseController {
     /**
      * 查询参赛团队列表
      */
-    @RequiresPermissions("system:team:list")
+    @RequiresPermissions("zhangyan:team:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(CompTeam compTeam) {
@@ -51,7 +51,7 @@ public class CompTeamController extends BaseController {
     /**
      * 导出参赛团队列表
      */
-    @RequiresPermissions("system:team:export")
+    @RequiresPermissions("zhangyan:team:export")
     @Log(title = "参赛团队", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -64,7 +64,7 @@ public class CompTeamController extends BaseController {
     /**
      * 新增参赛团队
      */
-    @RequiresPermissions("system:team:add")
+    @RequiresPermissions("zhangyan:team:add")
     @GetMapping("/add")
     public String add() {
         return prefix + "/add";
@@ -73,7 +73,7 @@ public class CompTeamController extends BaseController {
     /**
      * 新增保存参赛团队
      */
-    @RequiresPermissions("system:team:add")
+    @RequiresPermissions("zhangyan:team:add")
     @Log(title = "参赛团队", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -84,7 +84,7 @@ public class CompTeamController extends BaseController {
     /**
      * 修改参赛团队
      */
-    @RequiresPermissions("system:team:edit")
+    @RequiresPermissions("zhangyan:team:edit")
     @GetMapping("/edit/{teamId}")
     public String edit(@PathVariable("teamId") Long teamId, ModelMap mmap) {
         CompTeam compTeam = compTeamService.selectCompTeamByTeamId(teamId);
@@ -95,7 +95,7 @@ public class CompTeamController extends BaseController {
     /**
      * 修改保存参赛团队
      */
-    @RequiresPermissions("system:team:edit")
+    @RequiresPermissions("zhangyan:team:edit")
     @Log(title = "参赛团队", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -106,7 +106,7 @@ public class CompTeamController extends BaseController {
     /**
      * 删除参赛团队
      */
-    @RequiresPermissions("system:team:remove")
+    @RequiresPermissions("zhangyan:team:remove")
     @Log(title = "参赛团队", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

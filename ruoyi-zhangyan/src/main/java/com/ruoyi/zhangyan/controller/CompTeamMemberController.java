@@ -23,14 +23,14 @@ import java.util.List;
  * @date 2025-04-01
  */
 @Controller
-@RequestMapping("/system/member")
+@RequestMapping("/zhangyan/member")
 public class CompTeamMemberController extends BaseController {
-    private String prefix = "system/member";
+    private String prefix = "zhangyan/member";
 
     @Autowired
     private ICompTeamMemberService compTeamMemberService;
 
-    @RequiresPermissions("system:member:view")
+    @RequiresPermissions("zhangyan:member:view")
     @GetMapping()
     public String member() {
         return prefix + "/member";
@@ -39,7 +39,7 @@ public class CompTeamMemberController extends BaseController {
     /**
      * 查询团队成员列表
      */
-    @RequiresPermissions("system:member:list")
+    @RequiresPermissions("zhangyan:member:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(CompTeamMember compTeamMember) {
@@ -51,7 +51,7 @@ public class CompTeamMemberController extends BaseController {
     /**
      * 导出团队成员列表
      */
-    @RequiresPermissions("system:member:export")
+    @RequiresPermissions("zhangyan:member:export")
     @Log(title = "团队成员", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -64,7 +64,7 @@ public class CompTeamMemberController extends BaseController {
     /**
      * 新增团队成员
      */
-    @RequiresPermissions("system:member:add")
+    @RequiresPermissions("zhangyan:member:add")
     @GetMapping("/add")
     public String add() {
         return prefix + "/add";
@@ -73,7 +73,7 @@ public class CompTeamMemberController extends BaseController {
     /**
      * 新增保存团队成员
      */
-    @RequiresPermissions("system:member:add")
+    @RequiresPermissions("zhangyan:member:add")
     @Log(title = "团队成员", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -84,7 +84,7 @@ public class CompTeamMemberController extends BaseController {
     /**
      * 修改团队成员
      */
-    @RequiresPermissions("system:member:edit")
+    @RequiresPermissions("zhangyan:member:edit")
     @GetMapping("/edit/{memberId}")
     public String edit(@PathVariable("memberId") Long memberId, ModelMap mmap) {
         CompTeamMember compTeamMember = compTeamMemberService.selectCompTeamMemberByMemberId(memberId);
@@ -95,7 +95,7 @@ public class CompTeamMemberController extends BaseController {
     /**
      * 修改保存团队成员
      */
-    @RequiresPermissions("system:member:edit")
+    @RequiresPermissions("zhangyan:member:edit")
     @Log(title = "团队成员", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -106,7 +106,7 @@ public class CompTeamMemberController extends BaseController {
     /**
      * 删除团队成员
      */
-    @RequiresPermissions("system:member:remove")
+    @RequiresPermissions("zhangyan:member:remove")
     @Log(title = "团队成员", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

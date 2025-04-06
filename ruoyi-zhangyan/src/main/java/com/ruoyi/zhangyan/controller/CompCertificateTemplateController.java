@@ -23,14 +23,14 @@ import java.util.List;
  * @date 2025-04-01
  */
 @Controller
-@RequestMapping("/system/template")
+@RequestMapping("/zhangyan/template")
 public class CompCertificateTemplateController extends BaseController {
-    private String prefix = "system/template";
+    private String prefix = "zhangyan/template";
 
     @Autowired
     private ICompCertificateTemplateService compCertificateTemplateService;
 
-    @RequiresPermissions("system:template:view")
+    @RequiresPermissions("zhangyan:template:view")
     @GetMapping()
     public String template() {
         return prefix + "/template";
@@ -39,7 +39,7 @@ public class CompCertificateTemplateController extends BaseController {
     /**
      * 查询证书模板列表
      */
-    @RequiresPermissions("system:template:list")
+    @RequiresPermissions("zhangyan:template:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(CompCertificateTemplate compCertificateTemplate) {
@@ -51,7 +51,7 @@ public class CompCertificateTemplateController extends BaseController {
     /**
      * 导出证书模板列表
      */
-    @RequiresPermissions("system:template:export")
+    @RequiresPermissions("zhangyan:template:export")
     @Log(title = "证书模板", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -64,7 +64,7 @@ public class CompCertificateTemplateController extends BaseController {
     /**
      * 新增证书模板
      */
-    @RequiresPermissions("system:template:add")
+    @RequiresPermissions("zhangyan:template:add")
     @GetMapping("/add")
     public String add() {
         return prefix + "/add";
@@ -73,7 +73,7 @@ public class CompCertificateTemplateController extends BaseController {
     /**
      * 新增保存证书模板
      */
-    @RequiresPermissions("system:template:add")
+    @RequiresPermissions("zhangyan:template:add")
     @Log(title = "证书模板", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -84,7 +84,7 @@ public class CompCertificateTemplateController extends BaseController {
     /**
      * 修改证书模板
      */
-    @RequiresPermissions("system:template:edit")
+    @RequiresPermissions("zhangyan:template:edit")
     @GetMapping("/edit/{templateId}")
     public String edit(@PathVariable("templateId") Long templateId, ModelMap mmap) {
         CompCertificateTemplate compCertificateTemplate = compCertificateTemplateService.selectCompCertificateTemplateByTemplateId(templateId);
@@ -95,7 +95,7 @@ public class CompCertificateTemplateController extends BaseController {
     /**
      * 修改保存证书模板
      */
-    @RequiresPermissions("system:template:edit")
+    @RequiresPermissions("zhangyan:template:edit")
     @Log(title = "证书模板", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -106,7 +106,7 @@ public class CompCertificateTemplateController extends BaseController {
     /**
      * 删除证书模板
      */
-    @RequiresPermissions("system:template:remove")
+    @RequiresPermissions("zhangyan:template:remove")
     @Log(title = "证书模板", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

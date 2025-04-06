@@ -23,14 +23,14 @@ import java.util.List;
  * @date 2025-04-01
  */
 @Controller
-@RequestMapping("/system/registration")
+@RequestMapping("/zhangyan/registration")
 public class CompIndividualRegistrationController extends BaseController {
-    private String prefix = "system/registration";
+    private String prefix = "zhangyan/registration";
 
     @Autowired
     private ICompIndividualRegistrationService compIndividualRegistrationService;
 
-    @RequiresPermissions("system:registration:view")
+    @RequiresPermissions("zhangyan:registration:view")
     @GetMapping()
     public String registration() {
         return prefix + "/registration";
@@ -39,7 +39,7 @@ public class CompIndividualRegistrationController extends BaseController {
     /**
      * 查询个人报名列表
      */
-    @RequiresPermissions("system:registration:list")
+    @RequiresPermissions("zhangyan:registration:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(CompIndividualRegistration compIndividualRegistration) {
@@ -51,7 +51,7 @@ public class CompIndividualRegistrationController extends BaseController {
     /**
      * 导出个人报名列表
      */
-    @RequiresPermissions("system:registration:export")
+    @RequiresPermissions("zhangyan:registration:export")
     @Log(title = "个人报名", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -64,7 +64,7 @@ public class CompIndividualRegistrationController extends BaseController {
     /**
      * 新增个人报名
      */
-    @RequiresPermissions("system:registration:add")
+    @RequiresPermissions("zhangyan:registration:add")
     @GetMapping("/add")
     public String add() {
         return prefix + "/add";
@@ -73,7 +73,7 @@ public class CompIndividualRegistrationController extends BaseController {
     /**
      * 新增保存个人报名
      */
-    @RequiresPermissions("system:registration:add")
+    @RequiresPermissions("zhangyan:registration:add")
     @Log(title = "个人报名", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -84,7 +84,7 @@ public class CompIndividualRegistrationController extends BaseController {
     /**
      * 修改个人报名
      */
-    @RequiresPermissions("system:registration:edit")
+    @RequiresPermissions("zhangyan:registration:edit")
     @GetMapping("/edit/{registrationId}")
     public String edit(@PathVariable("registrationId") Long registrationId, ModelMap mmap) {
         CompIndividualRegistration compIndividualRegistration = compIndividualRegistrationService.selectCompIndividualRegistrationByRegistrationId(
@@ -96,7 +96,7 @@ public class CompIndividualRegistrationController extends BaseController {
     /**
      * 修改保存个人报名
      */
-    @RequiresPermissions("system:registration:edit")
+    @RequiresPermissions("zhangyan:registration:edit")
     @Log(title = "个人报名", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -107,7 +107,7 @@ public class CompIndividualRegistrationController extends BaseController {
     /**
      * 删除个人报名
      */
-    @RequiresPermissions("system:registration:remove")
+    @RequiresPermissions("zhangyan:registration:remove")
     @Log(title = "个人报名", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

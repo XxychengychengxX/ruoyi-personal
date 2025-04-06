@@ -23,14 +23,14 @@ import java.util.List;
  * @date 2025-04-01
  */
 @Controller
-@RequestMapping("/system/score")
+@RequestMapping("/zhangyan/score")
 public class CompScoreController extends BaseController {
-    private String prefix = "system/score";
+    private String prefix = "zhangyan/score";
 
     @Autowired
     private ICompScoreService compScoreService;
 
-    @RequiresPermissions("system:score:view")
+    @RequiresPermissions("zhangyan:score:view")
     @GetMapping()
     public String score() {
         return prefix + "/score";
@@ -39,7 +39,7 @@ public class CompScoreController extends BaseController {
     /**
      * 查询成绩列表
      */
-    @RequiresPermissions("system:score:list")
+    @RequiresPermissions("zhangyan:score:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(CompScore compScore) {
@@ -51,7 +51,7 @@ public class CompScoreController extends BaseController {
     /**
      * 导出成绩列表
      */
-    @RequiresPermissions("system:score:export")
+    @RequiresPermissions("zhangyan:score:export")
     @Log(title = "成绩", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -64,7 +64,7 @@ public class CompScoreController extends BaseController {
     /**
      * 新增成绩
      */
-    @RequiresPermissions("system:score:add")
+    @RequiresPermissions("zhangyan:score:add")
     @GetMapping("/add")
     public String add() {
         return prefix + "/add";
@@ -73,7 +73,7 @@ public class CompScoreController extends BaseController {
     /**
      * 新增保存成绩
      */
-    @RequiresPermissions("system:score:add")
+    @RequiresPermissions("zhangyan:score:add")
     @Log(title = "成绩", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -84,7 +84,7 @@ public class CompScoreController extends BaseController {
     /**
      * 修改成绩
      */
-    @RequiresPermissions("system:score:edit")
+    @RequiresPermissions("zhangyan:score:edit")
     @GetMapping("/edit/{scoreId}")
     public String edit(@PathVariable("scoreId") Long scoreId, ModelMap mmap) {
         CompScore compScore = compScoreService.selectCompScoreByScoreId(scoreId);
@@ -95,7 +95,7 @@ public class CompScoreController extends BaseController {
     /**
      * 修改保存成绩
      */
-    @RequiresPermissions("system:score:edit")
+    @RequiresPermissions("zhangyan:score:edit")
     @Log(title = "成绩", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -106,7 +106,7 @@ public class CompScoreController extends BaseController {
     /**
      * 删除成绩
      */
-    @RequiresPermissions("system:score:remove")
+    @RequiresPermissions("zhangyan:score:remove")
     @Log(title = "成绩", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody

@@ -67,6 +67,12 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-zhangyan</artifactId>
+            <version>4.8.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -11,8 +11,8 @@ import java.util.Date;
 /**
  * 文化活动对象 comp_activity
  *
- * @author ruoyi
- * @date 2025-04-01
+ * @author XxychengychengxX
+ * @date 2025-04-06
  */
 public class CompActivity extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -48,44 +48,44 @@ public class CompActivity extends BaseEntity {
     @Excel(name = "状态", readConverterExp = "0=启用,1=停用")
     private String status;
 
-    public void setActivityId(Long activityId) {
-        this.activityId = activityId;
-    }
-
     public Long getActivityId() {
         return activityId;
     }
 
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
+    public void setActivityId(Long activityId) {
+        this.activityId = activityId;
     }
 
     public String getActivityName() {
         return activityName;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
     }
 
     public Date getStartTime() {
         return startTime;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
     public Date getEndTime() {
         return endTime;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
