@@ -1,6 +1,8 @@
 package com.ruoyi.zhangyan.controller;
 
 import java.util.List;
+
+import com.ruoyi.zhangyan.service.ICompCompetitionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

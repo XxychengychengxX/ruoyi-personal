@@ -7,6 +7,7 @@
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-activity-edit" th:object="${compActivity}">
+            <h4 class="form-header h4">文化活动信息</h4>
             <input name="activityId" th:field="*{activityId}" type="hidden">
             <div class="col-xs-12">
                 <div class="form-group">
@@ -38,6 +39,16 @@
                     </div>
                 </div>
             </div>
+            <h4 class="form-header h4">赛事项目信息</h4>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-white btn-sm" onclick="addRow()"><i class="fa fa-plus"> 增加</i></button>
+                    <button type="button" class="btn btn-white btn-sm" onclick="sub.delRow()"><i class="fa fa-minus"> 删除</i></button>
+                    <div class="col-sm-12 select-table table-striped">
+                        <table id="bootstrap-table"></table>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -65,6 +76,113 @@
             minView: "month",
             autoclose: true
         });
+
+        $(function() {
+            var options = {
+                data: [[${compActivity.compCompetitionList}]],
+                pagination: false,
+                showSearch: false,
+                showRefresh: false,
+                showToggle: false,
+                showColumns: false,
+                sidePagination: "client",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'index',
+                    align: 'center',
+                    title: "序号",
+                    formatter: function (value, row, index) {
+                    	var columnIndex = $.common.sprintf("<input type='hidden' name='index' value='%s'>", $.table.serialNumber(index));
+                    	return columnIndex + $.table.serialNumber(index);
+                    }
+                },
+                {
+                    field: 'competitionName',
+                    align: 'center',
+                    title: '赛事名称',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].competitionName' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'type',
+                    align: 'center',
+                    title: '赛事类型',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].type' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'startTime',
+                    align: 'center',
+                    title: '赛事开始时间',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].startTime' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'endTime',
+                    align: 'center',
+                    title: '赛事结束时间',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].endTime' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'groupType',
+                    align: 'center',
+                    title: '组别分类',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].groupType' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    field: 'maxTeamMembers',
+                    align: 'center',
+                    title: '团队最大人数',
+                    formatter: function(value, row, index) {
+                        var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].maxTeamMembers' value='%s'>", index, value);
+                        return html;
+                    }
+                },
+
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var value = $.common.isNotEmpty(row.index) ? row.index : $.table.serialNumber(index);
+                        return '<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="sub.delRowByIndex(\'' + value + '\')"><i class="fa fa-remove"></i>删除</a>';
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+
+        function addRow() {
+            var count = $("#" + table.options.id).bootstrapTable('getData').length;
+            var row = {
+                index: $.table.serialNumber(count),
+                competitionName: "",
+                type: "",
+                startTime: "",
+                endTime: "",
+                groupType: "",
+                maxTeamMembers: "",
+            }
+            sub.addRow(row);
+        }
     </script>
 </body>
 </html>

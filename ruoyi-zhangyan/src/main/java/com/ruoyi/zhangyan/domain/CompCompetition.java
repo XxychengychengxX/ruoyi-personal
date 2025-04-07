@@ -59,7 +59,6 @@ public class CompCompetition extends BaseEntity
     {
         return competitionId;
     }
-
     public void setActivityId(Long activityId) 
     {
         this.activityId = activityId;
@@ -69,7 +68,6 @@ public class CompCompetition extends BaseEntity
     {
         return activityId;
     }
-
     public void setCompetitionName(String competitionName) 
     {
         this.competitionName = competitionName;
@@ -79,7 +77,6 @@ public class CompCompetition extends BaseEntity
     {
         return competitionName;
     }
-
     public void setType(String type) 
     {
         this.type = type;
@@ -89,7 +86,6 @@ public class CompCompetition extends BaseEntity
     {
         return type;
     }
-
     public void setStartTime(Date startTime) 
     {
         this.startTime = startTime;
@@ -99,7 +95,6 @@ public class CompCompetition extends BaseEntity
     {
         return startTime;
     }
-
     public void setEndTime(Date endTime) 
     {
         this.endTime = endTime;
@@ -109,7 +104,6 @@ public class CompCompetition extends BaseEntity
     {
         return endTime;
     }
-
     public void setGroupType(String groupType) 
     {
         this.groupType = groupType;
@@ -119,7 +113,6 @@ public class CompCompetition extends BaseEntity
     {
         return groupType;
     }
-
     public void setMaxTeamMembers(Long maxTeamMembers) 
     {
         this.maxTeamMembers = maxTeamMembers;

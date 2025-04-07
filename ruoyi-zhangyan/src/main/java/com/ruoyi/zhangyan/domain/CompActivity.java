@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文化活动对象 comp_activity
@@ -48,6 +49,11 @@ public class CompActivity extends BaseEntity {
     @Excel(name = "状态", readConverterExp = "0=启用,1=停用")
     private String status;
 
+    /**
+     * 赛事项目信息
+     */
+    private List<CompCompetition> compCompetitionList;
+
     public Long getActivityId() {
         return activityId;
     }
@@ -88,6 +94,14 @@ public class CompActivity extends BaseEntity {
         this.status = status;
     }
 
+    public List<CompCompetition> getCompCompetitionList() {
+        return compCompetitionList;
+    }
+
+    public void setCompCompetitionList(List<CompCompetition> compCompetitionList) {
+        this.compCompetitionList = compCompetitionList;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -100,6 +114,7 @@ public class CompActivity extends BaseEntity {
                 .append("createTime", getCreateTime())
                 .append("updateBy", getUpdateBy())
                 .append("updateTime", getUpdateTime())
+                .append("compCompetitionList", getCompCompetitionList())
                 .toString();
     }
 }

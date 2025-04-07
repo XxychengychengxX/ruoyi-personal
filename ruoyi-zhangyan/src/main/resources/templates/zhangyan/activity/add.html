@@ -5,65 +5,207 @@
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-activity-add">
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label is-required">活动名称：</label>
-                    <div class="col-sm-8">
-                        <input name="activityName" class="form-control" type="text" required>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-activity-add">
+        <h4 class="form-header h4">文化活动信息</h4>
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">活动名称：</label>
+                <div class="col-sm-8">
+                    <input name="activityName" class="form-control" type="text" required>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">活动开始时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="startTime" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label is-required">活动开始时间：</label>
-                    <div class="col-sm-8">
-                        <div class="input-group date">
-                            <input name="startTime" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">活动结束时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="endTime" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
+        </div>
+        <h4 class="form-header h4">赛事项目信息</h4>
+        <div class="row">
             <div class="col-xs-12">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label is-required">活动结束时间：</label>
-                    <div class="col-sm-8">
-                        <div class="input-group date">
-                            <input name="endTime" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        </div>
-                    </div>
+                <button type="button" class="btn btn-white btn-sm" onclick="addRow()"><i class="fa fa-plus"> 增加</i></button>
+                <button type="button" class="btn btn-white btn-sm" onclick="sub.delRow()"><i class="fa fa-minus"> 删除</i></button>
+                <div class="col-sm-12 select-table table-striped">
+                    <table id="bootstrap-table"></table>
                 </div>
             </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
-    <script th:inline="javascript">
-        var prefix = ctx + "zhangyan/activity"
-        $("#form-activity-add").validate({
-            focusCleanup: true
-        });
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "zhangyan/activity"
+    $("#form-activity-add").validate({
+        focusCleanup: true
+    });
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-activity-add').serialize());
-            }
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/add", $('#form-activity-add').serialize());
         }
+    }
 
-        $("input[name='startTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+    $("input[name='startTime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
 
-        $("input[name='endTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
+    $("input[name='endTime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
+
+    $(function() {
+        var options = {
+            pagination: false,
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            sidePagination: "client",
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'index',
+                align: 'center',
+                title: "序号",
+                formatter: function (value, row, index) {
+                    var columnIndex = $.common.sprintf("<input type='hidden' name='index' value='%s'>", $.table.serialNumber(index));
+                    return columnIndex + $.table.serialNumber(index);
+                }
+            },
+            {
+                field: 'competitionName',
+                align: 'center',
+                title: '赛事名称',
+                formatter: function(value, row, index) {
+                    var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].competitionName' value='%s'>", index, value);
+                    return html;
+                }
+            },
+          {
+    field: 'type',
+    align: 'center',
+    title: '赛事类型',
+    formatter: function(value, row, index) {
+        var options = [
+            {text: '个人赛', value: '0'},
+            {text: '团队赛', value: '1'}
+        ];
+        var html = $.common.sprintf("<select class='form-control' name='compCompetitionList[%s].type'>", index);
+        $.each(options, function(i, option) {
+            html += $.common.sprintf("<option value='%s' %s>%s</option>",
+                option.value,
+                option.value == value ? 'selected' : '',
+                option.text);
         });
-    </script>
+        html += "</select>";
+        return html;
+    }
+},
+{
+    field: 'startTime',
+    align: 'center',
+    title: '赛事开始时间',
+    formatter: function(value, row, index) {
+        var html = $.common.sprintf("<input class='form-control datetimepicker' type='text' placeholder='yyyy-MM-dd' name='compCompetitionList[%s].startTime' value='%s' autocomplete='off'>", index, value);
+        // 添加日期选择器初始化代码
+        setTimeout(function() {
+            $("input[name='compCompetitionList[" + index + "].startTime']").datetimepicker({
+                format: "yyyy-mm-dd",
+                minView: "month",
+                autoclose: true,
+                todayBtn: true,
+                language: 'zh-CN'  // 中文显示
+            });
+        }, 0);
+        return html;
+    }
+},
+{
+    field: 'endTime',
+    align: 'center',
+    title: '赛事结束时间',
+    formatter: function(value, row, index) {
+        var html = $.common.sprintf("<input class='form-control datetimepicker' type='text' placeholder='yyyy-MM-dd' name='compCompetitionList[%s].endTime' value='%s' autocomplete='off'>", index, value);
+        // 添加日期选择器初始化代码
+        setTimeout(function() {
+            $("input[name='compCompetitionList[" + index + "].endTime']").datetimepicker({
+                format: "yyyy-mm-dd",
+                minView: "month",
+                autoclose: true,
+                todayBtn: true,
+                language: 'zh-CN'  // 中文显示
+            });
+        }, 0);
+        return html;
+    }
+},
+            {
+                field: 'groupType',
+                align: 'center',
+                title: '组别分类',
+                formatter: function(value, row, index) {
+                    var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].groupType' value='%s'>", index, value);
+                    return html;
+                }
+            },
+            {
+                field: 'maxTeamMembers',
+                align: 'center',
+                title: '团队最大人数',
+                formatter: function(value, row, index) {
+                    var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].maxTeamMembers' value='%s'>", index, value);
+                    return html;
+                }
+            },
+            {
+                title: '操作',
+                align: 'center',
+                formatter: function(value, row, index) {
+                    var value = $.common.isNotEmpty(row.index) ? row.index : $.table.serialNumber(index);
+                    return '<a class="btn btn-danger btn-xs" href="javascript:void(0)" onclick="sub.delRowByIndex(\'' + value + '\')"><i class="fa fa-remove"></i>删除</a>';
+                }
+            }]
+        };
+        $.table.init(options);
+    });
+
+    function addRow() {
+        var count = $("#" + table.options.id).bootstrapTable('getData').length;
+        var row = {
+            index: $.table.serialNumber(count),
+            competitionName: "",
+            type: "",
+            startTime: "",
+            endTime: "",
+            groupType: "",
+            maxTeamMembers: "",
+        }
+        sub.addRow(row);
+    }
+</script>
 </body>
 </html>
