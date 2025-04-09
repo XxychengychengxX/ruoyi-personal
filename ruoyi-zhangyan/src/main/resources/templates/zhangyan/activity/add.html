@@ -105,26 +105,15 @@
                     return html;
                 }
             },
-          {
-    field: 'type',
-    align: 'center',
-    title: '赛事类型',
-    formatter: function(value, row, index) {
-        var options = [
-            {text: '个人赛', value: '0'},
-            {text: '团队赛', value: '1'}
-        ];
-        var html = $.common.sprintf("<select class='form-control' name='compCompetitionList[%s].type'>", index);
-        $.each(options, function(i, option) {
-            html += $.common.sprintf("<option value='%s' %s>%s</option>",
-                option.value,
-                option.value == value ? 'selected' : '',
-                option.text);
-        });
-        html += "</select>";
-        return html;
-    }
-},
+            {
+                field: 'type',
+                align: 'center',
+                title: '赛事类型',
+                formatter: function(value, row, index) {
+                    var html = $.common.sprintf("<input class='form-control' type='text' name='compCompetitionList[%s].type' value='%s'>", index, value);
+                    return html;
+                }
+            },
 {
     field: 'startTime',
     align: 'center',

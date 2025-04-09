@@ -1,94 +1,100 @@
 package com.ruoyi.zhangyan.service.impl;
 
-import java.util.List;
+import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.zhangyan.domain.CompCompetition;
+import com.ruoyi.zhangyan.mapper.CompActivityMapper;
+import com.ruoyi.zhangyan.mapper.CompCompetitionMapper;
+import com.ruoyi.zhangyan.service.ICompCompetitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.zhangyan.mapper.CompCompetitionMapper;
-import com.ruoyi.zhangyan.domain.CompCompetition;
-import com.ruoyi.zhangyan.service.ICompCompetitionService;
-import com.ruoyi.common.core.text.Convert;
+
+import java.util.List;
 
 /**
  * 赛事项目Service业务层处理
- * 
+ *
  * @author XxychengychengxX
  * @date 2025-04-06
  */
 @Service
-public class CompCompetitionServiceImpl implements ICompCompetitionService 
-{
+public class CompCompetitionServiceImpl implements ICompCompetitionService {
     @Autowired
     private CompCompetitionMapper compCompetitionMapper;
+    @Autowired
+    private CompActivityMapper compActivityMapper;
 
     /**
      * 查询赛事项目
-     * 
+     *
      * @param competitionId 赛事项目主键
      * @return 赛事项目
      */
     @Override
-    public CompCompetition selectCompCompetitionByCompetitionId(Long competitionId)
-    {
+    public CompCompetition selectCompCompetitionByCompetitionId(Long competitionId) {
         return compCompetitionMapper.selectCompCompetitionByCompetitionId(competitionId);
     }
 
     /**
      * 查询赛事项目列表
-     * 
+     *
      * @param compCompetition 赛事项目
      * @return 赛事项目
      */
     @Override
-    public List<CompCompetition> selectCompCompetitionList(CompCompetition compCompetition)
-    {
-        return compCompetitionMapper.selectCompCompetitionList(compCompetition);
+    public List<CompCompetition> selectCompCompetitionList(CompCompetition compCompetition) {
+        List<CompCompetition> compCompetitions = compCompetitionMapper.selectCompCompetitionList(compCompetition);
+        for (CompCompetition competition : compCompetitions) {
+            Long activityId = competition.getActivityId();
+            if (activityId != null) {
+                String activityName = compActivityMapper.selectCompActivityByActivityId(activityId).getActivityName();
+                competition.setActivityName(activityName);
+            }
+        }
+        return compCompetitions;
+
     }
 
     /**
      * 新增赛事项目
-     * 
+     *
      * @param compCompetition 赛事项目
      * @return 结果
      */
     @Override
-    public int insertCompCompetition(CompCompetition compCompetition)
-    {
+    public int insertCompCompetition(CompCompetition compCompetition) {
         return compCompetitionMapper.insertCompCompetition(compCompetition);
     }
 
     /**
      * 修改赛事项目
-     * 
+     *
      * @param compCompetition 赛事项目
      * @return 结果
      */
     @Override
-    public int updateCompCompetition(CompCompetition compCompetition)
-    {
+    public int updateCompCompetition(CompCompetition compCompetition) {
         return compCompetitionMapper.updateCompCompetition(compCompetition);
     }
 
     /**
      * 批量删除赛事项目
-     * 
+     *
      * @param competitionIds 需要删除的赛事项目主键
      * @return 结果
      */
     @Override
-    public int deleteCompCompetitionByCompetitionIds(String competitionIds)
-    {
+    public int deleteCompCompetitionByCompetitionIds(String competitionIds) {
         return compCompetitionMapper.deleteCompCompetitionByCompetitionIds(Convert.toStrArray(competitionIds));
     }
 
     /**
      * 删除赛事项目信息
-     * 
+     *
      * @param competitionId 赛事项目主键
      * @return 结果
      */
     @Override
-    public int deleteCompCompetitionByCompetitionId(Long competitionId)
-    {
+    public int deleteCompCompetitionByCompetitionId(Long competitionId) {
         return compCompetitionMapper.deleteCompCompetitionByCompetitionId(competitionId);
     }
 }
