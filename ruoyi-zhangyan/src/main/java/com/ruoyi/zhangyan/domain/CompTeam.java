@@ -2,81 +2,58 @@ package com.ruoyi.zhangyan.domain;
 
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * 参赛团队对象 comp_team
+ * 团队管理对象 comp_team
  *
- * @author ruoyi
- * @date 2025-04-01
+ * @author XxychengychengxX
+ * @date 2025-04-11
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class CompTeam extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 团队ID
+     *
      */
     private Long teamId;
 
     /**
-     * 赛事ID
+     *
      */
-    @Excel(name = "赛事ID")
-    private Long competitionId;
-
-    /**
-     * 团队名称
-     */
-    @Excel(name = "团队名称")
+    @Excel(name = "队伍名")
     private String teamName;
 
     /**
-     * 队长身份证号
+     * 队长用户ID
      */
-    @Excel(name = "队长身份证号")
-    private String captainIdCard;
+    @Excel(name = "队长用户ID")
+    private Long captainUserId;
 
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
-    }
+    /**
+     * 队伍最多人数
+     */
+    @Excel(name = "队伍最多人数")
+    private Long maxMemberNum;
 
-    public Long getTeamId() {
-        return teamId;
-    }
 
-    public void setCompetitionId(Long competitionId) {
-        this.competitionId = competitionId;
-    }
+    @Excel(name = "队伍描述")
+    private String description;
 
-    public Long getCompetitionId() {
-        return competitionId;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setCaptainIdCard(String captainIdCard) {
-        this.captainIdCard = captainIdCard;
-    }
-
-    public String getCaptainIdCard() {
-        return captainIdCard;
-    }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("teamId", getTeamId())
-                .append("competitionId", getCompetitionId())
                 .append("teamName", getTeamName())
-                .append("captainIdCard", getCaptainIdCard())
+                .append("captainUserId", getCaptainUserId())
                 .append("createTime", getCreateTime())
+                .append("maxMemberNum", getMaxMemberNum())
                 .toString();
     }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.zhangyan.mapper.CompTeamMapper">
+    
+    <resultMap type="com.ruoyi.zhangyan.domain.CompTeam" id="CompTeamResult">
+        <result property="teamId"    column="team_id"    />
+        <result property="teamName"    column="team_name"    />
+        <result property="captainUserId"    column="captain_user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="maxMemberNum"    column="max_member_num"    />
+        <result property="description"    column="description"    />
+    </resultMap>
+
+    <sql id="selectCompTeamVo">
+        select team_id, team_name, captain_user_id, create_time, max_member_num from comp_team
+    </sql>
+
+    <select id="selectCompTeamList" parameterType="CompTeam" resultMap="CompTeamResult">
+        <include refid="selectCompTeamVo"/>
+        <where>  
+            <if test="teamName != null  and teamName != ''"> and team_name like concat('%', #{teamName}, '%')</if>
+            <if test="captainUserId != null "> and captain_user_id = #{captainUserId}</if>
+        </where>
+    </select>
+    
+    <select id="selectCompTeamByTeamId" parameterType="Long" resultMap="CompTeamResult">
+        <include refid="selectCompTeamVo"/>
+        where team_id = #{teamId}
+    </select>
+
+    <insert id="insertCompTeam" parameterType="CompTeam" useGeneratedKeys="true" keyProperty="teamId">
+        insert into comp_team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teamName != null and teamName != ''">team_name,</if>
+            <if test="captainUserId != null">captain_user_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="maxMemberNum != null">max_member_num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teamName != null and teamName != ''">#{teamName},</if>
+            <if test="captainUserId != null">#{captainUserId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="maxMemberNum != null">#{maxMemberNum},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCompTeam" parameterType="CompTeam">
+        update comp_team
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teamName != null and teamName != ''">team_name = #{teamName},</if>
+            <if test="captainUserId != null">captain_user_id = #{captainUserId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="maxMemberNum != null">max_member_num = #{maxMemberNum},</if>
+        </trim>
+        where team_id = #{teamId}
+    </update>
+
+    <delete id="deleteCompTeamByTeamId" parameterType="Long">
+        delete from comp_team where team_id = #{teamId}
+    </delete>
+
+    <delete id="deleteCompTeamByTeamIds" parameterType="String">
+        delete from comp_team where team_id in 
+        <foreach item="teamId" collection="array" open="(" separator="," close=")">
+            #{teamId}
+        </foreach>
+    </delete>
+
+</mapper>

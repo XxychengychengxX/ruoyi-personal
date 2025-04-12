@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.zhangyan.mapper.CompTeamUserMapper">
+    
+    <resultMap type="CompTeamUser" id="CompTeamUserResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="teamId"    column="team_id"    />
+    </resultMap>
+
+    <sql id="selectCompTeamUserVo">
+        select id, user_id, team_id from comp_team_user
+    </sql>
+
+    <select id="selectCompTeamUserList" parameterType="CompTeamUser" resultMap="CompTeamUserResult">
+        <include refid="selectCompTeamUserVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectCompTeamUserById" parameterType="Long" resultMap="CompTeamUserResult">
+        <include refid="selectCompTeamUserVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCompTeamUser" parameterType="CompTeamUser" useGeneratedKeys="true" keyProperty="id">
+        insert into comp_team_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="teamId != null">team_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="teamId != null">#{teamId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCompTeamUser" parameterType="CompTeamUser">
+        update comp_team_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="teamId != null">team_id = #{teamId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCompTeamUserById" parameterType="Long">
+        delete from comp_team_user where id = #{id}
+    </delete>
+
+    <delete id="deleteCompTeamUserByIds" parameterType="String">
+        delete from comp_team_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
