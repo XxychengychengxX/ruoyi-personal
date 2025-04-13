@@ -101,7 +101,36 @@
     });
 
 // 报名函数
+function applyTeam(teamId) {
+    var userName = [[${@permission.getPrincipalProperty('userName')}]];
+    var userId = [[${@permission.getPrincipalProperty('userId')}]];
+    console.log(username);
+    var applyMessage = prompt("请输入申请理由", "");
 
+        $.modal.loading("正在提交申请...");
+        $.ajax({
+            url: prefix + "/apply",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                teamId: teamId,
+                userId : userId,
+                applyMessage: applyMessage
+            }),
+            success: function(result) {
+                $.modal.close();
+                if (result.code === 200) {
+                    $.modal.alertSuccess("申请提交成功");
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+            },
+            error: function() {
+                $.modal.close();
+                $.modal.alertError("申请提交失败");
+            }
+        });
+    }
 
 </script>
 </body>
