@@ -36,6 +36,11 @@ public class CompTeam extends BaseEntity {
     private Long captainUserId;
 
     /**
+     * 队长用户名
+     */
+    @Excel(name = "队长用户名")
+    private String captainUsername;
+    /**
      * 队伍最多人数
      */
     @Excel(name = "队伍最多人数")

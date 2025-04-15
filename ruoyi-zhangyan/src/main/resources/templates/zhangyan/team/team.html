@@ -23,6 +23,8 @@
                                     class="fa fa-search"></i>&nbsp;搜索</a>
                             <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
                                     class="fa fa-refresh"></i>&nbsp;重置</a>
+                            <a class="btn btn-info btn-rounded btn-sm" onclick="$.table.searchMine()"><i
+                                    class="fa fa-filter me-2"></i>&nbsp;查看我的队伍</a>
                         </li>
                     </ul>
                 </div>
@@ -64,22 +66,31 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
+            applyUrl:  prefix + "/apply",
             modalName: "团队管理",
             columns: [{
                 checkbox: true
             },
             {
                 field: 'teamId',
-                title: '',
+                title: '队伍id',
                 visible: false
             },
             {
                 field: 'teamName',
-                title: ''
+                title: '队伍名'
             },
             {
                 field: 'captainUserId',
                 title: '队长用户ID'
+            },
+            {
+                field: 'captainUsername',
+                title: '队长用户名'
+            },
+            {
+                field: 'description',
+                title: '描述'
             },
             {
                 field: 'maxMemberNum',
@@ -104,8 +115,9 @@
 function applyTeam(teamId) {
     var userName = [[${@permission.getPrincipalProperty('userName')}]];
     var userId = [[${@permission.getPrincipalProperty('userId')}]];
-    console.log(username);
-    var applyMessage = prompt("请输入申请理由", "");
+    console.log(userName);
+    console.log(userId);
+    //var applyMessage = prompt("请输入申请理由", "");
 
         $.modal.loading("正在提交申请...");
         $.ajax({
@@ -115,19 +127,19 @@ function applyTeam(teamId) {
             data: JSON.stringify({
                 teamId: teamId,
                 userId : userId,
-                applyMessage: applyMessage
             }),
             success: function(result) {
-                $.modal.close();
-                if (result.code === 200) {
-                    $.modal.alertSuccess("申请提交成功");
+                if (result.code === 0) {
+                    $.modal.alertSuccess("加入成功");
                 } else {
                     $.modal.alertError(result.msg);
                 }
             },
             error: function() {
-                $.modal.close();
                 $.modal.alertError("申请提交失败");
+            },
+            complete: function() {  // 相当于finally
+                $.modal.closeLoading(); // 确保一定会关闭加载动画
             }
         });
     }

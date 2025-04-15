@@ -66,4 +66,12 @@ public interface ICompTeamService
      * @param req 请求体
      */
     boolean applyTeam(CompTeamApplyRequest req);
+
+    /**
+     * 列出我加入的队伍
+     *
+     * @param userId 用户ID
+     * @return 队伍列表
+     */
+    List<CompTeam> listMine(Long userId);
 }

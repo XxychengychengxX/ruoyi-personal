@@ -3,12 +3,15 @@ package com.ruoyi.zhangyan.controller;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.zhangyan.domain.CompTeam;
 import com.ruoyi.zhangyan.dto.req.CompTeamApplyRequest;
 import com.ruoyi.zhangyan.service.ICompTeamService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +33,16 @@ public class CompTeamController extends BaseController {
 
     @Autowired
     private ICompTeamService compTeamService;
+    @Autowired
+    private SysUserMapper sysUserMapper;
+
+    @RequiresPermissions("zhangyan:team:list")
+    @PostMapping("/listMine")
+    @ResponseBody
+    public TableDataInfo listMine(@RequestBody CompTeamApplyRequest compTeam) {
+        startPage();
+        return getDataTable(compTeamService.listMine(compTeam.getUserId()));
+    }
 
     @RequiresPermissions("zhangyan:team:view")
     @GetMapping()
@@ -46,6 +59,7 @@ public class CompTeamController extends BaseController {
     public TableDataInfo list(CompTeam compTeam) {
         startPage();
         List<CompTeam> list = compTeamService.selectCompTeamList(compTeam);
+
         return getDataTable(list);
     }
 

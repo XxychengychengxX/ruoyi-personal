@@ -1,6 +1,7 @@
 package com.ruoyi.zhangyan.mapper;
 
 import com.ruoyi.zhangyan.domain.CompTeamUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface CompTeamUserMapper {
      * @return 团队成员管理
      */
     public CompTeamUser selectCompTeamUserById(Long id);
+
+
 
     /**
      * 查询团队成员管理列表
@@ -58,4 +61,11 @@ public interface CompTeamUserMapper {
      * @return 结果
      */
     public int deleteCompTeamUserByIds(String[] ids);
+
+    /**
+     * 根据队伍id查询成员
+     * @param teamId 队伍id
+     * @return 成员列表
+     */
+    List<CompTeamUser> selectCompTeamUserByTeamIdAndUserId(@Param("teamId") Long teamId, @Param("userId") Long userId);
 }

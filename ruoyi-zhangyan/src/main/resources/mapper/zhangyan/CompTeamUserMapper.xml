@@ -24,6 +24,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCompTeamUserVo"/>
         where id = #{id}
     </select>
+    <select id="selectCompTeamUserByTeamIdAndUserId" resultMap="CompTeamUserResult">
+        SELECT id, user_id, team_id FROM comp_team_user
+        <where>
+            <if test="teamId != null">AND team_id = #{teamId}</if>
+            <if test="userId != null">AND user_id = #{userId}</if>
+        </where>
+    </select>
 
     <insert id="insertCompTeamUser" parameterType="CompTeamUser" useGeneratedKeys="true" keyProperty="id">
         insert into comp_team_user

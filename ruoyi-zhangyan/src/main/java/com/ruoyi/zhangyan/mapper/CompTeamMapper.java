@@ -1,7 +1,10 @@
 package com.ruoyi.zhangyan.mapper;
 
 import java.util.List;
+import java.util.Set;
+
 import com.ruoyi.zhangyan.domain.CompTeam;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 团队管理Mapper接口
@@ -58,4 +61,6 @@ public interface CompTeamMapper
      * @return 结果
      */
     public int deleteCompTeamByTeamIds(String[] teamIds);
+
+    List<CompTeam> selectCompTeamListByTeamId(@Param("teamId") Set<Long> teamId);
 }

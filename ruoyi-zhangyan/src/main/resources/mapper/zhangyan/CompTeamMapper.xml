@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCompTeamVo">
-        select team_id, team_name, captain_user_id, create_time, max_member_num from comp_team
+        select team_id, team_name, captain_user_id, create_time, max_member_num,description from comp_team
     </sql>
 
     <select id="selectCompTeamList" parameterType="CompTeam" resultMap="CompTeamResult">
@@ -29,6 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCompTeamVo"/>
         where team_id = #{teamId}
     </select>
+    <select id="selectCompTeamListByTeamId" resultMap="CompTeamResult">
+        <include refid="selectCompTeamVo"/>
+        where team_id IN
+        <foreach item="teamId" collection="teamId" open="(" separator="," close=")">
+            #{teamId}
+        </foreach>
+    </select>
 
     <insert id="insertCompTeam" parameterType="CompTeam" useGeneratedKeys="true" keyProperty="teamId">
         insert into comp_team
@@ -36,12 +43,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="teamName != null and teamName != ''">team_name,</if>
             <if test="captainUserId != null">captain_user_id,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="description != null">description,</if>
             <if test="maxMemberNum != null">max_member_num,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="teamName != null and teamName != ''">#{teamName},</if>
             <if test="captainUserId != null">#{captainUserId},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="description != null">description,</if>
             <if test="maxMemberNum != null">#{maxMemberNum},</if>
          </trim>
     </insert>
@@ -53,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="captainUserId != null">captain_user_id = #{captainUserId},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="maxMemberNum != null">max_member_num = #{maxMemberNum},</if>
+            <if test="description != null">description = #{description},</if>
         </trim>
         where team_id = #{teamId}
     </update>
