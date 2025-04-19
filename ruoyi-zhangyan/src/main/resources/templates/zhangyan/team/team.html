@@ -59,6 +59,41 @@
     var applyFlag = [[${@permission.hasPermi('zhangyan:team:apply')}]];
     var prefix = ctx + "zhangyan/team";
 
+$.extend($.table, {
+    searchMine: function() {
+        $.modal.loading("正在加载您的队伍...");
+        var userId = [[${@permission.getPrincipalProperty('userId')}]];
+        // 发送AJAX请求到专门的后端接口
+        $.ajax({
+            url: prefix + "/listMine",
+            contentType: "application/json",
+            type: "POST",
+            data: JSON.stringify({
+                userId : userId
+            }),
+            success: function(res) {
+                if(res.code === 0) {
+                    // 完全替换表格数据
+                     // 关键：必须同时传入 total 和 rows
+                     $('#bootstrap-table').bootstrapTable('load', {
+                         total: res.total,  // 总记录数
+                         rows: res.rows     // 当前页数据
+                     });
+                     //$('#bootstrap-table').bootstrapTable('load', res.rows);
+
+                } else {
+                    $.modal.alertError(res.msg || "加载失败");
+                }
+            },
+            error: function() {
+                $.modal.alertError("网络请求失败");
+            },
+            complete: function() {
+                $.modal.closeLoading();
+            }
+        });
+    }
+});
     $(function() {
         var options = {
             url: prefix + "/list",
@@ -115,8 +150,8 @@
 function applyTeam(teamId) {
     var userName = [[${@permission.getPrincipalProperty('userName')}]];
     var userId = [[${@permission.getPrincipalProperty('userId')}]];
-    console.log(userName);
-    console.log(userId);
+    //console.log(userName);
+    //console.log(userId);
     //var applyMessage = prompt("请输入申请理由", "");
 
         $.modal.loading("正在提交申请...");

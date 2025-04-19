@@ -91,7 +91,7 @@ public class CompTeamServiceImpl implements ICompTeamService {
         int i = compTeamMapper.insertCompTeam(compTeam);
 
         CompTeamUser compTeamUser = new CompTeamUser();
-        compTeamUser.setUserId(currentUser.getUserId());
+        compTeamUser.setUserId(compTeam.getCaptainUserId());
         compTeamUser.setTeamId(compTeam.getTeamId());
         int i1 = compTeamUserMapper.insertCompTeamUser(compTeamUser);
         return i + i1;
